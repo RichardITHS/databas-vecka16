@@ -38,7 +38,6 @@ app.listen({ port: 3000}, () => {
     console.log('Server startad på localhost:3000')
 }) */
 
-
 //3. Vi använder request.method för att ta reda på om inkommande request är av GET, DELETE eller annan typ
 //I nedan exempel så arbetar vi med Nodes egna funktionalitet "request.method"
 
@@ -55,8 +54,8 @@ const app = http.createServer((request, response) => {
      console.log('Server startad på localhost:3000')
  }) */
 
- //4. I nedan exempel så arbetar vi med Nodes egna funktionalitet "statusCode"
- const http = require('http')
+//4. I nedan exempel så arbetar vi med Nodes egna funktionalitet "statusCode"
+/*  const http = require('http')
 
 
  const app = http.createServer((request, response) => {
@@ -68,6 +67,47 @@ const app = http.createServer((request, response) => {
 
   app.listen({ port: 3000}, () => {
       console.log('Server startad på localhost:3000')
-  })
+  }) */
 
-  
+//5. I nedan exempel så ska vi göra följande:
+/*
+  - Ge en respons i form av statuskod 200 i en header
+  - Skicka ett meddelande beroende på adress som besökare är på
+  - Vi ska testa att skicka med json data
+  - Vi ska skicka med HTML content till vår webläsare från Node
+  */
+
+const http = require('http')
+
+//Snyggare sätt att hantera PORT data på
+const PORT = process.env.PORT || 5001
+
+http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/html' })
+
+    //Add Routes
+    //Snyggare sätt att hantera url på
+    const url = req.url
+    if (url === '/profile') {
+        res.write('<h1>Welcome to your profile page</h1>')
+        res.end()
+    } else if (url === '/shipment') {
+        //Send json , dummy payload (payload=större mängd data, som ett paket)
+        const payload = {
+            address: {
+                street: 'Richard street',
+                city: 'Ankeborg'
+            }
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' })
+        res.write(JSON.stringify(payload))
+        res.end()
+    } else {
+        res.write('You have reached another page')
+        res.end()
+    }
+})
+
+.listen(PORT, () => {
+    console.log(`Server is fine and running on port ${PORT}`)
+})
