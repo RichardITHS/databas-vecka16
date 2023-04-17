@@ -88,9 +88,11 @@ http.createServer((req, res) => {
     //Add Routes
     //Snyggare sätt att hantera url på
     const url = req.url
+    //Om man kommer till en endpoint som heter profile så ska den skicka html
     if (url === '/profile') {
         res.write('<h1>Welcome to your profile page</h1>')
         res.end()
+        //Om man kommer till en endpoint som heter shipment så ska den skicka json data
     } else if (url === '/shipment') {
         //Send json , dummy payload (payload=större mängd data, som ett paket)
         const payload = {
@@ -102,12 +104,13 @@ http.createServer((req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json' })
         res.write(JSON.stringify(payload))
         res.end()
+        //Om ingen av endpoints ovan skickar den annan html text
     } else {
         res.write('You have reached another page')
         res.end()
     }
 })
-
-.listen(PORT, () => {
-    console.log(`Server is fine and running on port ${PORT}`)
-})
+    //Använder den förutbestämda säkra port anslutningen som är lagd ovanför
+    .listen(PORT, () => {
+        console.log(`Server is fine and running on port ${PORT}`)
+    })
