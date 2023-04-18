@@ -35,6 +35,12 @@ app.get('/', (req, res) => {
     res.render('index', {name:'Richard'})
 })
 
+//Inhämtar mina routes från min routes mapp
+const userRouter = require("./routes/users")
+
+//Middleware, dvs använder router med express
+app.use("/users", userRouter)
+
 app.listen(3000, () => {
     console.log('Server startad på port 3000')
 })
