@@ -5,8 +5,6 @@ const router = express.Router()
 //ska ligga överst
 
 
-//Implementera ejs
-app.set("view engine", "ejs")
 
 
 router.get('/:id', (req, res) => {
